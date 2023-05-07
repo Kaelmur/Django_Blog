@@ -1,0 +1,74 @@
+{% include 'blog/base.html'  %}
+{% load static %}
+<header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1534190760961-74e8c1c5c3da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>{{ view.kwargs.username }}'s Posts</h1>
+            <span class="subheading">Number of posts: {{ page_obj.paginator.count }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}" style="text-align: center">
+  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        {% for post in posts %}
+        <div class="post-preview">
+          <a href="{% url 'post-detail' post.id %}">
+            <h2 class="post-title">
+              {{ post.title }}
+            </h2>
+            <h3 class="post-subtitle">
+              {{ post.subtitle }}
+            </h3>
+          </a>
+          <p class="post-meta">Posted by
+            <img class="rounded-circle" style="width: 20px; height: 20px; " src="{{ post.author.profile.image.url }}">
+            <a href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+            on {{ post.date_posted|date:"F d, Y" }}
+          </p>
+        </div>
+        <hr>
+        {% endfor %}
+        <!-- New Post -->
+        <div class="clearfix">
+          <a class="btn btn-primary float-right" href="{% url 'post-create' %}">Create New Post</a>
+        </div>
+        {% if is_paginated %}
+        <div style="text-align: center; margin-top: 60px;">
+          {% if page_obj.has_previous %}
+            <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}"><</a>
+          {% endif %}
+
+          {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+              <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+          {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">></a>
+            <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+          {% endif %}
+        {% endif %}
+          </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+{% include 'blog/footer.html' %}

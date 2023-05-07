@@ -1,0 +1,57 @@
+{% include "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+<link href="{% static 'css/styles.css' %}" rel="stylesheet">
+  <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1567898890737-00781fb0d206?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1467&q=80')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Profile</h1>
+            <span class="subheading">All your personal information.</span>
+            <span class="subheading"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+<div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="content-section">
+                {% if messages %}
+                  {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }}" style="text-align: center">
+                    {{ message }}
+                  </div>
+                  {% endfor %}
+                  {% endif %}
+              <div class="media">
+                {% if  not user.profile.image %}
+                <img class="rounded-circle account-img" style="width:100%;width: 200px; height: 200px;" src="/media/img.gif">
+                {% else %}
+                <img class="rounded-circle account-img" style="width:100%;width: 200px; height: 200px;" src="{{ user.profile.image.url }}">
+                {% endif %}
+                <div class="media-body" style="margin: 40px 0 0 50px;">
+                  <h2 class="account-heading">{{ user.username }}</h2>
+                  <p class="text-secondary">{{ user.email }}</p>
+                </div>
+              </div>
+              <form method="POST" enctype="multipart/form-data" style="margin-top: 40px;">
+                  {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Profile Info</legend>
+                    {{ u_form|crispy }}
+                    {{ p_form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                  <button class="btn btn-outline-dark" type="submit">Update</button>
+                </div>
+              </form>
+            </div>
+          <br>
+      </div>
+    </div>
+  </div>
+{% include "blog/footer.html" %}

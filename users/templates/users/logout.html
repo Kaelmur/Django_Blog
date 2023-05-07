@@ -1,0 +1,28 @@
+{% include "blog/base.html" %}
+{% load static %}
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1531592937781-344ad608fabf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Logged out</h1>
+            <span class="subheading">Come back soon!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="border-top pt-3" style='text-align: center;'>
+              <a href="{% url 'login' %}"><button class="btn btn-outline-info">Log In</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% include "blog/footer.html" %}

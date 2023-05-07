@@ -1,0 +1,42 @@
+{% include "blog/base.html" %}
+  <!-- Page Header -->
+  <header class="masthead" style="">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading" style="text-align: center;">
+            <h1>{{ object.title }}</h1>
+            <h2 class="subheading"></h2>
+            <span class="meta">Posted by
+            <img class="rounded-circle" style="width: 20px; height: 20px; " src="{{ object.author.profile.image.url }}">
+              <a href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
+              on {{ object.date_posted|date:"F d, Y" }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          {{ object.content }}
+          <hr>
+          {% if object.author == user %}
+            <div class="clearfix">
+            <a class="btn btn-outline-primary" href="{% url 'post-update' object.id %}">Edit Post</a>
+            <a class="btn btn-outline-danger"  href="{% url 'post-delete' object.id %}">Delete</a>
+            </div>
+
+          {% endif %}
+
+          </div>
+      </div>
+    </div>
+  </article>
+
+  <hr>
+{% include "blog/footer.html" %}

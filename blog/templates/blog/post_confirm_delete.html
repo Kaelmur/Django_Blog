@@ -1,0 +1,32 @@
+{% include "blog/base.html" %}
+{% load static %}
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('{% static 'img/edit-bg.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Delete Post</h1>
+            <span class="subheading">Are you sure you want to delete the post - "{{ object.title }}"?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+          <form method="POST">
+          {% csrf_token %}
+          <div class="form-group" style="text-align: center;">
+            <button class="btn btn-outline-danger" type="submit">Delete</button>
+            <a class="btn btn-outline-secondary" href="{% url 'post-detail' object.id %}">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% include "blog/footer.html" %}
